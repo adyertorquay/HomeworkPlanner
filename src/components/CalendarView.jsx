@@ -1,7 +1,7 @@
 // CalendarView.jsx
 import React from "react";
 import { format, parseISO } from "date-fns";
-import { generateICS } from "../utils/scheduler";
+import { generateICS } from "../utils/icsExport";
 
 const Calendar = ({ tasks }) => {
   const allDates = tasks
