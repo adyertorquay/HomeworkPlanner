@@ -1,26 +1,19 @@
-// icsExport.js
-import { createEvents } from "ics";
+// icsExport.js (client-side fetcher for API route)
 
 export function generateICS(tasks, callback) {
-  const events = tasks
-    .filter((task) => task.scheduledDate && task.scheduledTime)
-    .map((task) => {
-      const [hour, minute] = task.scheduledTime.split(":").map(Number);
-      const [year, month, day] = task.scheduledDate.split("-").map(Number);
-
-      return {
-        start: [year, month, day, hour, minute],
-        duration: { hours: 1 },
-        title: task.title,
-        description: `Due: ${task.dueDate}`,
-      };
+  fetch("/api/generate-ics", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ tasks }),
+  })
+    .then((res) => res.blob())
+    .then((blob) => {
+      const url = URL.createObjectURL(blob);
+      callback(url);
+    })
+    .catch((err) => {
+      console.error("ICS generation failed:", err);
     });
-
-  createEvents(events, (error, value) => {
-    if (error) {
-      console.error("ICS generation error:", error);
-      return;
-    }
-    callback(value);
-  });
 }
