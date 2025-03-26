@@ -232,4 +232,6 @@ const GCSEPlanner = () => {
   );
 };
 
-export default App;
+export default GCSEPlanner;
+
+export default GCSEPlanner;
