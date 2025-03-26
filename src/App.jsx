@@ -233,5 +233,3 @@ const GCSEPlanner = () => {
 };
 
 export default GCSEPlanner;
-
-export default App;
